@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import StompContext from "../context/StompContext";
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+import React, { useEffect, useRef, useState } from 'react'
+import StompContext from '../context/StompContext'
+import SockJS from 'sockjs-client'
+import { Client } from '@stomp/stompjs'
 
 /**
  * The StompSessionProvider manages the STOMP connection
@@ -13,74 +13,88 @@ import { Client } from "@stomp/stompjs";
  * Please consult the @stomp/stompjs documentation for more information.
  */
 function StompSessionProvider(props) {
-  const { url, stompClientOptions } = props;
+  const { url, stompClientOptions } = props
 
-  const [client, setClient] = useState(undefined);
-  const subscriptionRequests = useRef(new Map());
-
+  const [client, setClient] = useState(undefined)
+  const subscriptionRequests = useRef(new Map())
 
   useEffect(() => {
-    const _client = new Client(stompClientOptions);
+    const _client = new Client(stompClientOptions)
 
     if (!stompClientOptions.brokerURL && !stompClientOptions.webSocketFactory) {
-      _client.webSocketFactory = function() {
-        const parsedUrl = new URL(url);
-        if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
-          return new SockJS(url);
-        } else if (parsedUrl.protocol === "ws:" || parsedUrl.protocol === "wss:") {
-          return new WebSocket(url);
-        } else throw "Protocol not supported";
-      };
+      _client.webSocketFactory = function () {
+        const parsedUrl = new URL(url)
+        if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+          return new SockJS(url)
+        } else if (
+          parsedUrl.protocol === 'ws:' ||
+          parsedUrl.protocol === 'wss:'
+        ) {
+          return new WebSocket(url)
+        } else throw new Error('Protocol not supported')
+      }
     }
 
-    _client.onConnect = function(frame) {
-      if (stompClientOptions.onConnect) stompClientOptions.onConnect(frame);
+    _client.onConnect = function (frame) {
+      if (stompClientOptions.onConnect) stompClientOptions.onConnect(frame)
 
-      subscriptionRequests.current.forEach(value => {
-        value.subscription = _client.subscribe(value.destination, value.callback, value.headers);
-      });
-    };
+      subscriptionRequests.current.forEach((value) => {
+        value.subscription = _client.subscribe(
+          value.destination,
+          value.callback,
+          value.headers
+        )
+      })
+    }
 
     if (!stompClientOptions.onStompError) {
-      _client.onStompError = function(frame) {
-        throw frame;
-      };
+      _client.onStompError = function (frame) {
+        throw frame
+      }
     }
 
-    _client.activate();
-    setClient(_client);
+    _client.activate()
+    setClient(_client)
 
-    return () => _client.deactivate();
-  }, [url, stompClientOptions]);
+    return () => _client.deactivate()
+  }, [url, stompClientOptions])
 
   const subscribe = (destination, callback, headers = {}) => {
-    const subscriptionId = Math.random().toString(36).substr(2, 9);
+    const subscriptionId = Math.random().toString(36).substr(2, 9)
     const subscriptionRequest = {
       destination,
       callback,
       headers
-    };
+    }
 
-    subscriptionRequests.current.set(subscriptionId, subscriptionRequest);
+    subscriptionRequests.current.set(subscriptionId, subscriptionRequest)
 
     if (client) {
-      subscriptionRequest.subscription = client.subscribe(destination, callback, headers);
+      subscriptionRequest.subscription = client.subscribe(
+        destination,
+        callback,
+        headers
+      )
     }
 
     return () => {
-      subscriptionRequests.current.get(subscriptionId).subscription.unsubscribe();
-      subscriptionRequests.current.delete(subscriptionId);
-    };
-  };
+      subscriptionRequests.current
+        .get(subscriptionId)
+        .subscription.unsubscribe()
+      subscriptionRequests.current.delete(subscriptionId)
+    }
+  }
 
   return (
-    <StompContext.Provider value={{
-      client,
-      subscribe
-    }}>
+    <StompContext.Provider
+      value={{
+        client,
+        subscribe
+      }}
+    >
       {props.children}
     </StompContext.Provider>
-  );
+  )
 }
 
-export default StompSessionProvider;
+export default StompSessionProvider

@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import { StompSessionProvider } from './index'
 
-describe('ExampleComponent', () => {
+describe('StompSessionProvider', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(StompSessionProvider).toBeTruthy()
   })
 })

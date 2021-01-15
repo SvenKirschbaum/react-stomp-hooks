@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import "react-stomp-hooks/dist/index.css";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import {

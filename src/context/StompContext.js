@@ -1,6 +1,5 @@
-import { createContext } from "react";
+import { createContext } from 'react'
 
+const StompContext = createContext(undefined)
 
-const StompContext = createContext(undefined);
-
-export default StompContext;
+export default StompContext

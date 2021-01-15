@@ -1,4 +1,26 @@
 language: node_js
 node_js:
-  - 12
-  - 10
+  - 14
+script:
+  - npm test
+  - npm run predeploy
+deploy:
+  - provider: pages:git
+    edge: true
+    cleanup: false
+    token: $GITHUB_TOKEN
+    local_dir: example/build
+    on:
+      tags: true
+  - provider: releases
+    edge: true
+    api_key: $GITHUB_TOKEN
+    file: []
+    on:
+      tags: true
+  - provider: npm
+    cleanup: false
+    api_token: $NPM_API_TOKEN
+    edge: true
+    on:
+      tags: true
