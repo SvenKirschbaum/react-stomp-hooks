@@ -2,7 +2,7 @@
 
 > A react library to manage a application wide STOMP connection via SockJS or Websockets.
 
-[![NPM](https://img.shields.io/npm/v/react-stomp-hooks.svg)](https://www.npmjs.com/package/react-stomp-hooks) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-stomp-hooks.svg)](https://www.npmjs.com/package/react-stomp-hooks) [![Travis](https://img.shields.io/travis/com/fallobst22/react-stomp-hooks)](https://travis-ci.com/github/fallobst22/react-stomp-hooks/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -43,7 +43,7 @@ function SubscribingComponent() {
   useSubscription("/topic/test", (message) => setLastMessage(message.body));
 
   return (
-    <Box>Last Message: {lastMessage}</Box>
+    <div>Last Message: {lastMessage}</div>
   );
 }
 ```

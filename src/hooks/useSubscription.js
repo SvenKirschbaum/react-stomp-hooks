@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import StompContext from "../context/StompContext";
+import { useContext, useEffect } from 'react'
+import StompContext from '../context/StompContext'
 
 /**
  *
@@ -8,11 +8,11 @@ import StompContext from "../context/StompContext";
  * @param headers Additional Headers for this subscription, consult @stomp/stompjs docs.
  */
 function useSubscription(destination, onMessage, headers = {}) {
-  const stompContext = useContext(StompContext);
+  const stompContext = useContext(StompContext)
 
   useEffect(() => {
-    return stompContext.subscribe(destination, onMessage, headers);
-  }, [destination]);
+    return stompContext.subscribe(destination, onMessage, headers)
+  }, [destination])
 }
 
-export default useSubscription;
+export default useSubscription
