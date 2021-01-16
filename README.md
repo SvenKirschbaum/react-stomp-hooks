@@ -27,7 +27,6 @@ const App = () => {
     <StompSessionProvider
       url={"https://stream.elite12.de/api/sock"}
       //All options supported by @stomp/stompjs can be used here
-      stompClientOptions={{}}
     >
       <SubscribingComponent />
     </StompSessionProvider>

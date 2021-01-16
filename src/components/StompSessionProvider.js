@@ -5,25 +5,28 @@ import { Client } from '@stomp/stompjs'
 
 /**
  * The StompSessionProvider manages the STOMP connection
- * All Hooks and HOCs in this library require an anchestor of this type.
+ * All Hooks and HOCs in this library require an ancestor of this type.
  * The URL to connect to can be specified via the url prop.
- * Depending on the Schema of the URL either Sockjs or a raw Weboscket is used.
- * You can override this behavior with the brokerURL or webSocketFactory option of the stompClientOptions.
- * Custom @stomp/stompjs options can be used via the stompClientOptions prop.
+ * Depending on the Schema of the URL either Sockjs or a raw Websocket is used.
+ * You can override this behavior with the brokerURL or webSocketFactory props, which will then be forwarded to @stomp/stompjs
+ * Custom @stomp/stompjs options can be used as props.
  * Please consult the @stomp/stompjs documentation for more information.
  */
 function StompSessionProvider(props) {
-  const { url, stompClientOptions } = props
+  let { url, children, stompClientOptions, ...stompOptions } = props
+
+  // Support old API
+  if (stompClientOptions) stompOptions = stompClientOptions
 
   const [client, setClient] = useState(undefined)
   const subscriptionRequests = useRef(new Map())
 
   useEffect(() => {
-    const _client = new Client(stompClientOptions)
+    const _client = new Client(stompOptions)
 
-    if (!stompClientOptions.brokerURL && !stompClientOptions.webSocketFactory) {
+    if (!stompOptions.brokerURL && !stompOptions.webSocketFactory) {
       _client.webSocketFactory = function () {
-        const parsedUrl = new URL(url)
+        const parsedUrl = new URL(url, window?.location?.href)
         if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
           return new SockJS(url)
         } else if (
@@ -36,7 +39,7 @@ function StompSessionProvider(props) {
     }
 
     _client.onConnect = function (frame) {
-      if (stompClientOptions.onConnect) stompClientOptions.onConnect(frame)
+      if (stompOptions.onConnect) stompOptions.onConnect(frame)
 
       subscriptionRequests.current.forEach((value) => {
         value.subscription = _client.subscribe(
@@ -47,7 +50,7 @@ function StompSessionProvider(props) {
       })
     }
 
-    if (!stompClientOptions.onStompError) {
+    if (!stompOptions.onStompError) {
       _client.onStompError = function (frame) {
         throw frame
       }
@@ -57,7 +60,7 @@ function StompSessionProvider(props) {
     setClient(_client)
 
     return () => _client.deactivate()
-  }, [url, stompClientOptions])
+  }, [url, stompOptions.brokerURL])
 
   const subscribe = (destination, callback, headers = {}) => {
     const subscriptionId = Math.random().toString(36).substr(2, 9)
@@ -69,7 +72,7 @@ function StompSessionProvider(props) {
 
     subscriptionRequests.current.set(subscriptionId, subscriptionRequest)
 
-    if (client) {
+    if (client && client.connected) {
       subscriptionRequest.subscription = client.subscribe(
         destination,
         callback,
@@ -92,7 +95,7 @@ function StompSessionProvider(props) {
         subscribe
       }}
     >
-      {props.children}
+      {children}
     </StompContext.Provider>
   )
 }

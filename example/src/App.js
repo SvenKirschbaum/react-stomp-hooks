@@ -31,19 +31,16 @@ const App = () => {
     <StompSessionProvider
       url={"https://stream.elite12.de/api/sock"}
       //All options supported by @stomp/stompjs can be used here
-      stompClientOptions={
-        {
-          debug: function(str) {
-            console.log(str);
-          }
-        }
-      }
+      debug={(str) => {
+        console.log(str);
+      }}
     >
       <CssBaseline />
       <Container>
         <Card style={{ margin: "3em" }} variant="outlined">
           <CardContent>
             <Typography>You can see the STOMP Messages send and received in the browser console</Typography>
+            <Typography>Note that, because the components are unmounted when the accordion is unexpanded, all subscriptions are removed when you close the accordion.</Typography>
           </CardContent>
         </Card>
         <Showcase title={"Subscribing"}><Subscribing /></Showcase>
