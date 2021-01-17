@@ -39,6 +39,7 @@ function SubscribingComponent() {
   //Subscribe to /topic/test, and use handler for all received messages
   //Note that all subscriptions made through the library are automatically removed when their owning component gets unmounted.
   //If the STOMP connection itself is lost they are however restored on reconnect.
+  //You can also supply an array as the first parameter, which will subscribe to all destinations in the array
   useSubscription("/topic/test", (message) => setLastMessage(message.body));
 
   return (
