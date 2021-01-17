@@ -27,7 +27,7 @@ function useSubscription(destinations, onMessage, headers = {}) {
         _cleanUpFunction()
       })
     }
-  }, _destinations)
+  }, [...Object.values(_destinations), ...Object.values(headers)])
 }
 
 export default useSubscription

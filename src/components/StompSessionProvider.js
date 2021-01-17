@@ -60,7 +60,7 @@ function StompSessionProvider(props) {
     setClient(_client)
 
     return () => _client.deactivate()
-  }, [url, stompOptions.brokerURL])
+  }, [url, ...Object.values(stompOptions)])
 
   const subscribe = (destination, callback, headers = {}) => {
     const subscriptionId = Math.random().toString(36).substr(2, 9)
