@@ -15,7 +15,7 @@ deploy:
   - provider: releases
     edge: true
     api_key: $GITHUB_TOKEN
-    file: []
+    file: "README.md"
     on:
       tags: true
   - provider: npm
