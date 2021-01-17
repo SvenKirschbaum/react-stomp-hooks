@@ -81,9 +81,12 @@ function StompSessionProvider(props) {
     }
 
     return () => {
-      subscriptionRequests.current
-        .get(subscriptionId)
-        .subscription.unsubscribe()
+      const subscriptionData = subscriptionRequests.current.get(subscriptionId)
+
+      if (subscriptionData.subscription) {
+        subscriptionData.subscription.unsubscribe()
+      }
+
       subscriptionRequests.current.delete(subscriptionId)
     }
   }
