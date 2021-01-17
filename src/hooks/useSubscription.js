@@ -9,12 +9,11 @@ import StompContext from '../context/StompContext'
  */
 function useSubscription(destinations, onMessage, headers = {}) {
   const stompContext = useContext(StompContext)
+  const _destinations = Array.isArray(destinations)
+    ? destinations
+    : [destinations]
 
   useEffect(() => {
-    const _destinations = Array.isArray(destinations)
-      ? destinations
-      : [destinations]
-
     const cleanUpFunctions = []
 
     _destinations.forEach((_destination) =>
@@ -28,7 +27,7 @@ function useSubscription(destinations, onMessage, headers = {}) {
         _cleanUpFunction()
       })
     }
-  }, [destinations])
+  }, _destinations)
 }
 
 export default useSubscription
