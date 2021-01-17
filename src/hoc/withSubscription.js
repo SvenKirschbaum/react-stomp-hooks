@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
 import useSubscription from '../hooks/useSubscription'
 
-function withSubscription(WrappedComponent, destination, headers = {}) {
+function withSubscription(WrappedComponent, destinations, headers = {}) {
   return (props) => {
     const ref = useRef()
     useSubscription(
-      destination,
+      destinations,
       (message) => ref.current.onMessage(message),
       headers
     )
