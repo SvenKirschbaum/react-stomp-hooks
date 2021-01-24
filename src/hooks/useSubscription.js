@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import StompContext from '../context/StompContext'
 
 /**
@@ -9,16 +9,25 @@ import StompContext from '../context/StompContext'
  */
 function useSubscription(destinations, onMessage, headers = {}) {
   const stompContext = useContext(StompContext)
+  const callbackRef = useRef()
   const _destinations = Array.isArray(destinations)
     ? destinations
     : [destinations]
+
+  callbackRef.current = onMessage
 
   useEffect(() => {
     const cleanUpFunctions = []
 
     _destinations.forEach((_destination) =>
       cleanUpFunctions.push(
-        stompContext.subscribe(_destination, onMessage, headers)
+        stompContext.subscribe(
+          _destination,
+          (message) => {
+            callbackRef.current(message)
+          },
+          headers
+        )
       )
     )
 
