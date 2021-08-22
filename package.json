@@ -23,7 +23,7 @@
     "predeploy": "cd example && npm install && npm run build"
   },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": ">16.8.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
