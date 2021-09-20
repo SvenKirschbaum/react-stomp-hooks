@@ -20,7 +20,6 @@ function useSubscription(
       'There must be a StompSessionProver as Ancestor of all Stomp Hooks and HOCs'
     );
 
-  const callbackRef = useRef<messageCallbackType>(onMessage);
   const _destinations = Array.isArray(destinations)
     ? destinations
     : [destinations];
@@ -33,7 +32,7 @@ function useSubscription(
         stompContext.subscribe(
           _destination,
           (message) => {
-            callbackRef.current(message);
+            onMessage(message);
           },
           headers
         )
@@ -45,7 +44,7 @@ function useSubscription(
         _cleanUpFunction();
       });
     };
-  }, [...Object.values(_destinations), ...Object.values(headers)]);
+  }, [...Object.values(_destinations), onMessage, ...Object.values(headers)]);
 }
 
 export default useSubscription;
