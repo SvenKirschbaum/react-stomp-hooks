@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import StompContext from '../context/StompContext';
 import { messageCallbackType, StompHeaders } from '@stomp/stompjs';
 
