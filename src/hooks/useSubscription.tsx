@@ -17,7 +17,7 @@ function useSubscription(
 
   if (stompContext === undefined)
     throw new Error(
-      'There must be a StompSessionProver as Ancestor of all Stomp Hooks and HOCs'
+      'There must be a StompSessionProvider as Ancestor of all Stomp Hooks and HOCs'
     );
 
   const callbackRef = useRef<messageCallbackType>(onMessage);
