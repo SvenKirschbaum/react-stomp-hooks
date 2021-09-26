@@ -25,6 +25,8 @@ function useSubscription(
     ? destinations
     : [destinations];
 
+  callbackRef.current = onMessage;
+
   useEffect(() => {
     const cleanUpFunctions: (() => void)[] = [];
 
