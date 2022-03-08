@@ -46,6 +46,7 @@ const App = () => {
         <Showcase title={"Subscribing"}><Subscribing /></Showcase>
         <Showcase title={"Sending Messages"}><SendingMessages /></Showcase>
         <Showcase title={"Higher Order Components"}><HigherOrderComponents /></Showcase>
+        <Showcase title={"Dynamic subscribing/unsubscribing"}><DynamicSubscription /></Showcase>
       </Container>
     </StompSessionProvider>
   );
@@ -149,6 +150,26 @@ const HigherOrderComponents = withStompClient(withSubscription(
     }
   }, "/user/queue/echoreply")
 );
+
+function DynamicSubscription() {
+  const [lastMessage, setLastMessage] = useState("No message received yet");
+  const [subscribed, setSubscribed] = useState(false);
+
+  useSubscription(
+    //The value of the first parameter can be mutated to dynamically subscribe/unsubscribe from topics
+    subscribed ? ["/topic/test"] : [],
+    (message) => setLastMessage(message.body)
+  );
+
+  return (
+    <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+      <Box>Last Message: {lastMessage}</Box>
+      <Box>
+        <Button onClick={() => setSubscribed(!subscribed)}>{subscribed ? "Unsubscribe" : "Subscribe"}</Button>
+      </Box>
+    </Box>
+  );
+}
 
 function Showcase(props) {
   return (

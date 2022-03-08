@@ -47,7 +47,10 @@ function useSubscription(
         _cleanUpFunction();
       });
     };
-  }, [...Object.values(_destinations), ...Object.values(headers)]);
+  }, [
+    Object.values(_destinations).toString(),
+    Object.values(headers).toString()
+  ]);
 }
 
 export default useSubscription;
