@@ -58,8 +58,8 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@stomp/stompjs": "^6.1.0",
-    "sockjs-client": "^1.5.1"
+    "@stomp/stompjs": "^6.1.2",
+    "sockjs-client": "^1.6.0"
   },
   "files": [
     "dist"
