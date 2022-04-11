@@ -25,7 +25,15 @@ export function subscribeMock(
   };
 }
 
-export function sendMockMessage(destination: string, message: IMessage): void {
+/**
+ * Simulates receiving a message from the server to the specified destination
+ * @param destination The topic to send the message to
+ * @param message The message to send
+ */
+export function mockReceiveMessage(
+  destination: string,
+  message: IMessage
+): void {
   if (subscriptions.has(destination)) {
     // @ts-ignore
     subscriptions.get(destination).forEach((callback: Function) => {
@@ -34,6 +42,10 @@ export function sendMockMessage(destination: string, message: IMessage): void {
   }
 }
 
+/**
+ * Gets the current subscriptions for the specified destination
+ * @param destination The topic to get the subscriptions for, or undefined to get all subscriptions
+ */
 export function getMockSubscriptions(destination?: string) {
   if (destination) {
     return subscriptions.get(destination);

@@ -21,7 +21,7 @@ it('Subscribing component works', () => {
 
   //Simulate receiving a Message
   act(() => {
-    stompMock.sendMockMessage("/topic/test", {
+    stompMock.mockReceiveMessage("/topic/test", {
       body: "Hello World"
     });
   });
@@ -37,22 +37,22 @@ it('SendingMessages component works', () => {
   )
 
   //No message has been sent
-  expect(stompMock.getSendMockMessages().size).toBe(0);
+  expect(stompMock.getSentMockMessages().size).toBe(0);
 
   //Send a message
   fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Hello World' } });
   fireEvent.click(screen.getByRole('button'));
 
   //Only one destination has been used
-  expect(stompMock.getSendMockMessages().size).toBe(1);
+  expect(stompMock.getSentMockMessages().size).toBe(1);
   //Only one message has been sent to the selected destination
-  expect(stompMock.getSendMockMessages("/app/echo")).toHaveLength(1);
+  expect(stompMock.getSentMockMessages("/app/echo")).toHaveLength(1);
   //The message has the correct body
-  expect(stompMock.getSendMockMessages("/app/echo")[0].body).toBe("Echo Hello World");
+  expect(stompMock.getSentMockMessages("/app/echo")[0].body).toBe("Echo Hello World");
 
   //Simulate receiving echo reply
   act(() => {
-    stompMock.sendMockMessage("/user/queue/echoreply", {
+    stompMock.mockReceiveMessage("/user/queue/echoreply", {
       body: "Echo Hello World"
     });
   });
@@ -69,22 +69,22 @@ it('HigherOrderComponents component works', () => {
   )
 
   //No message has been sent
-  expect(stompMock.getSendMockMessages().size).toBe(0);
+  expect(stompMock.getSentMockMessages().size).toBe(0);
 
   //Send a message
   fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Hello World' } });
   fireEvent.click(screen.getByRole('button'));
 
   //Only one destination has been used
-  expect(stompMock.getSendMockMessages().size).toBe(1);
+  expect(stompMock.getSentMockMessages().size).toBe(1);
   //Only one message has been sent to the selected destination
-  expect(stompMock.getSendMockMessages("/app/echo")).toHaveLength(1);
+  expect(stompMock.getSentMockMessages("/app/echo")).toHaveLength(1);
   //The message has the correct body
-  expect(stompMock.getSendMockMessages("/app/echo")[0].body).toBe("Echo Hello World");
+  expect(stompMock.getSentMockMessages("/app/echo")[0].body).toBe("Echo Hello World");
 
   //Simulate receiving echo reply
   act(() => {
-    stompMock.sendMockMessage("/user/queue/echoreply", {
+    stompMock.mockReceiveMessage("/user/queue/echoreply", {
       body: "Echo Hello World"
     });
   });
@@ -93,7 +93,7 @@ it('HigherOrderComponents component works', () => {
   screen.getByText('Last Message received: Echo Hello World');
 })
 
-it('HigherOrderComponents component works', () => {
+it('DynamicSubscription component works', () => {
   render(
     <stompMock.StompSessionProviderMock>
       <DynamicSubscription />

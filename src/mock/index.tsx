@@ -1,23 +1,18 @@
 import StompSessionProviderMock from './StompSessionProviderMock';
 import {
   getMockClient,
-  publishMockMessage,
-  getSendMockMessages
+  mockClientPublish,
+  getSentMockMessages
 } from './client';
-import {
-  sendMockMessage,
-  subscribeMock,
-  getMockSubscriptions
-} from './subscriptions';
+import { mockReceiveMessage, getMockSubscriptions } from './subscriptions';
 import { reset } from './reset';
 
 export {
   StompSessionProviderMock,
   getMockClient,
-  publishMockMessage,
-  sendMockMessage,
-  subscribeMock,
-  getSendMockMessages,
+  mockClientPublish,
+  mockReceiveMessage,
+  getSentMockMessages,
   reset,
   getMockSubscriptions
 };
