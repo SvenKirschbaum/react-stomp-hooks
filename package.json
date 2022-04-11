@@ -15,12 +15,10 @@
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "test": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
+    "test": "run-s test:unit test:lint",
     "test:lint": "eslint --ext .tsx,.ts .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && npm install && npm run build"
+    "test:watch": "react-scripts test --env=jsdom"
   },
   "peerDependencies": {
     "react": ">16.8.0"

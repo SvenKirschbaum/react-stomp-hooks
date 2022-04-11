@@ -1,9 +1,14 @@
 language: node_js
 node_js:
   - 14
+install:
+  - npm ci
+  - (cd example && npm install)
 script:
   - npm test
-  - npm run predeploy
+  - npm run build
+  - (cd example && npm test)
+  - (cd example && npm run build)
 deploy:
   - provider: pages:git
     edge: true
