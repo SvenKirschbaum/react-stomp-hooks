@@ -24,7 +24,7 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-const App = () => {
+export function App() {
   return (
     //Initialize Stomp connection, will use sockjs, as the protocol specified is https
     //The Connection can be used by all child components via the hooks or hocs.
@@ -50,9 +50,9 @@ const App = () => {
       </Container>
     </StompSessionProvider>
   );
-};
+}
 
-function Subscribing() {
+export function Subscribing() {
   const [lastMessage, setLastMessage] = useState("No message received yet");
 
   //Subscribe to /topic/test, and use handler for all received messages
@@ -66,7 +66,7 @@ function Subscribing() {
   );
 }
 
-function SendingMessages() {
+export function SendingMessages() {
   const [input, setInput] = useState("");
   const [lastMessage, setLastMessage] = useState("No message received yet");
 
@@ -97,7 +97,7 @@ function SendingMessages() {
   );
 }
 
-const HigherOrderComponents = withStompClient(withSubscription(
+export const HigherOrderComponents = withStompClient(withSubscription(
   class HOCDemo extends React.Component {
 
     constructor(props) {
@@ -151,7 +151,7 @@ const HigherOrderComponents = withStompClient(withSubscription(
   }, "/user/queue/echoreply")
 );
 
-function DynamicSubscription() {
+export function DynamicSubscription() {
   const [lastMessage, setLastMessage] = useState("No message received yet");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -171,7 +171,7 @@ function DynamicSubscription() {
   );
 }
 
-function Showcase(props) {
+export function Showcase(props) {
   return (
     <Accordion style={{ margin: "3em" }} TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary
@@ -187,5 +187,3 @@ function Showcase(props) {
     </Accordion>
   );
 }
-
-export default App;
