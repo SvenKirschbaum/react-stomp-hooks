@@ -4,6 +4,7 @@ import { StompSessionProviderContext } from '../interfaces/StompSessionProviderC
 
 /**
  * Returns the Stomp Client from @stomp/stompjs
+ * This will be undefined if the client is currently not connected
  */
 function useStompClient() {
   const context = useContext<StompSessionProviderContext | undefined>(

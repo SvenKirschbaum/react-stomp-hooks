@@ -72,15 +72,21 @@ export function SendingMessages() {
 
   //Get Instance of StompClient
   //This is the StompCLient from @stomp/stompjs
+  //Note: This will be undefined if the client is currently not connected
   const stompClient = useStompClient();
   useSubscription("/user/queue/echoreply", (message) => setLastMessage(message.body));
 
   const sendMessage = () => {
-    //Send Message
-    stompClient.publish({
-      destination: "/app/echo",
-      body: "Echo " + input
-    });
+    if(stompClient) {
+      //Send Message
+      stompClient.publish({
+        destination: "/app/echo",
+        body: "Echo " + input
+      });
+    }
+    else {
+      //Handle error
+    }
   };
 
   return (

@@ -55,6 +55,14 @@ function StompSessionProvider(props: StompSessionProviderProps) {
           value.headers
         );
       });
+
+      setClient(_client);
+    };
+
+    _client.onWebSocketClose = function (event) {
+      if (stompOptions.onWebSocketClose) stompOptions.onWebSocketClose(event);
+
+      setClient(undefined);
     };
 
     if (!stompOptions.onStompError) {
@@ -64,7 +72,6 @@ function StompSessionProvider(props: StompSessionProviderProps) {
     }
 
     _client.activate();
-    setClient(_client);
 
     return () => {
       _client.deactivate();
