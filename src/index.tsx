@@ -13,3 +13,24 @@ export {
   withSubscription,
   mock
 };
+
+export type {
+  Client,
+  messageCallbackType,
+  IMessage,
+  StompHeaders,
+  StompConfig,
+  IFrame,
+  IPublishParams,
+  IRawFrameType,
+  IStompSocket,
+  IStompSocketMessageEvent,
+  ITransaction,
+  StompSocketState,
+  ActivationState,
+  wsErrorCallbackType,
+  RawHeaderType,
+  closeEventCallbackType,
+  frameCallbackType,
+  debugFnType
+} from '@stomp/stompjs';
