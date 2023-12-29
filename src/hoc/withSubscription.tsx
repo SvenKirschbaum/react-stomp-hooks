@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
 import useSubscription from '../hooks/useSubscription';
-import { StompHeaders } from '@stomp/stompjs';
+import { StompHeaders, IMessage } from '@stomp/stompjs';
 import {
   MessageReceiverInterface,
   StompMessageReceiver
 } from '../interfaces/StompMessageReceiver';
-import { IMessage } from '@stomp/stompjs/esm6/i-message';
 
 function withSubscription<P>(
   WrappedComponent: StompMessageReceiver<P>,
