@@ -2,7 +2,7 @@
 
 > A react library to manage a application wide STOMP connection via SockJS or Websockets.
 
-[![NPM](https://img.shields.io/npm/v/react-stomp-hooks.svg)](https://www.npmjs.com/package/react-stomp-hooks) [![Travis](https://img.shields.io/travis/com/fallobst22/react-stomp-hooks)](https://travis-ci.com/github/fallobst22/react-stomp-hooks/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-stomp-hooks.svg)](https://www.npmjs.com/package/react-stomp-hooks) [![Build](https://github.com/SvenKirschbaum/react-stomp-hooks/actions/workflows/build.yaml/badge.svg)](https://github.com/SvenKirschbaum/react-stomp-hooks/actions/workflows/build.yaml/) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -12,7 +12,7 @@ npm install --save react-stomp-hooks
 
 ## Usage
 
-See also [the supplied example project](https://fallobst22.github.io/react-stomp-hooks/), and [its sourcecode](example/src/App.js).
+See also [the supplied example project](https://svenkirschbaum.github.io/react-stomp-hooks/), and [its sourcecode](example/src/App.js).
 
 ```jsx
 import React from 'react'
@@ -52,4 +52,4 @@ function SubscribingComponent() {
 
 ## License
 
-MIT © [fallobst22](https://github.com/fallobst22)
+MIT © [Sven Kirschbaum](https://github.com/SvenKirschbaum)
