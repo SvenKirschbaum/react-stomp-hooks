@@ -1,4 +1,4 @@
-import { DynamicSubscription, HigherOrderComponents, SendingMessages, Subscribing } from './App';
+import { DynamicSubscription, HigherOrderComponents, SendingMessages, Subscribing } from './App.jsx';
 import { mock as stompMock } from 'react-stomp-hooks';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 

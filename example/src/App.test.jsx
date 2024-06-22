@@ -1,10 +1,10 @@
 import React from 'react'
-import { App } from './App';
+import { App } from './App.jsx';
 import { render } from '@testing-library/react';
 
 //If you want to test a component which contains a StompSessionProvider, you can use the following code to replace it with the provided Mock implementation:
-jest.mock('react-stomp-hooks', () => {
-  const originalModule = jest.requireActual('react-stomp-hooks');
+vi.mock('react-stomp-hooks', async () => {
+  const originalModule = await vi.importActual('react-stomp-hooks');
 
   return {
     ...originalModule,

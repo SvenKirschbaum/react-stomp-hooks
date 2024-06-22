@@ -12,7 +12,7 @@ npm install --save react-stomp-hooks
 
 ## Usage
 
-See also [the supplied example project](https://svenkirschbaum.github.io/react-stomp-hooks/), and [its sourcecode](example/src/App.js).
+See also [the supplied example project](https://svenkirschbaum.github.io/react-stomp-hooks/), and [its sourcecode](example/src/App.jsx).
 
 ```jsx
 import React from 'react'
