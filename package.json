@@ -20,7 +20,11 @@
   },
   "scripts": {
     "build": "tsup",
-    "watch": "npm run build -- --watch src"
+    "watch": "npm run build -- --watch src",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "peerDependencies": {
     "react": ">16.8.0"
@@ -31,12 +35,25 @@
     "sockjs-client": "^1.6.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.5.0",
+    "@swc/core": "^1.6.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "eslint": "^9.5.0",
+    "eslint-plugin-react": "^7.34.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vitest": "^0.5.4",
+    "eslint-plugin-vitest-globals": "^1.5.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^5.5.2",
     "tsup": "^8.1.0",
-    "@swc/core": "^1.6.5"
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^7.13.1"
+  },
+  "overrides": {
+    "eslint": "^9.5.0"
   }
 }
