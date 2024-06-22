@@ -1,4 +1,4 @@
-import { IMessage } from '@stomp/stompjs/src/i-message';
+import { IMessage } from '@stomp/stompjs';
 import { messageCallbackType, StompHeaders } from '@stomp/stompjs';
 
 export const subscriptions = new Map<string, Map<string, Function>>();
