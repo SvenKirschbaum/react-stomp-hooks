@@ -1,4 +1,4 @@
-import { IPublishParams } from '@stomp/stompjs';
+import { IPublishParams } from "@stomp/stompjs";
 
 export const messages = new Map<string, Array<IPublishParams>>();
 
@@ -22,7 +22,7 @@ export function mockClientPublish(params: IPublishParams) {
  */
 export function getMockClient() {
   return {
-    publish: mockClientPublish
+    publish: mockClientPublish,
   };
 }
 

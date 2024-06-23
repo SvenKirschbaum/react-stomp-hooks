@@ -7,7 +7,7 @@ import {
   useStompClient,
   useSubscription,
   withStompClient,
-  withSubscription
+  withSubscription,
 } from "react-stomp-hooks";
 import {
   Accordion,
@@ -20,7 +20,7 @@ import {
   Container,
   Grid,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -39,14 +39,29 @@ export function App() {
       <Container>
         <Card style={{ margin: "3em" }} variant="outlined">
           <CardContent>
-            <Typography>You can see the STOMP Messages send and received in the browser console</Typography>
-            <Typography>Note that, because the components are unmounted when the accordion is unexpanded, all subscriptions are removed when you close the accordion.</Typography>
+            <Typography>
+              You can see the STOMP Messages send and received in the browser
+              console
+            </Typography>
+            <Typography>
+              Note that, because the components are unmounted when the accordion
+              is unexpanded, all subscriptions are removed when you close the
+              accordion.
+            </Typography>
           </CardContent>
         </Card>
-        <Showcase title={"Subscribing"}><Subscribing /></Showcase>
-        <Showcase title={"Sending Messages"}><SendingMessages /></Showcase>
-        <Showcase title={"Higher Order Components"}><HigherOrderComponents /></Showcase>
-        <Showcase title={"Dynamic subscribing/unsubscribing"}><DynamicSubscription /></Showcase>
+        <Showcase title={"Subscribing"}>
+          <Subscribing />
+        </Showcase>
+        <Showcase title={"Sending Messages"}>
+          <SendingMessages />
+        </Showcase>
+        <Showcase title={"Higher Order Components"}>
+          <HigherOrderComponents />
+        </Showcase>
+        <Showcase title={"Dynamic subscribing/unsubscribing"}>
+          <DynamicSubscription />
+        </Showcase>
       </Container>
     </StompSessionProvider>
   );
@@ -61,9 +76,7 @@ export function Subscribing() {
   //You can also supply an array as the first parameter, which will subscribe to all destinations in the array
   useSubscription("/topic/test", (message) => setLastMessage(message.body));
 
-  return (
-    <Box>Last Message: {lastMessage}</Box>
-  );
+  return <Box>Last Message: {lastMessage}</Box>;
 }
 
 export function SendingMessages() {
@@ -74,26 +87,36 @@ export function SendingMessages() {
   //This is the StompCLient from @stomp/stompjs
   //Note: This will be undefined if the client is currently not connected
   const stompClient = useStompClient();
-  useSubscription("/user/queue/echoreply", (message) => setLastMessage(message.body));
+  useSubscription("/user/queue/echoreply", (message) =>
+    setLastMessage(message.body),
+  );
 
   const sendMessage = () => {
-    if(stompClient) {
+    if (stompClient) {
       //Send Message
       stompClient.publish({
         destination: "/app/echo",
-        body: "Echo " + input
+        body: "Echo " + input,
       });
-    }
-    else {
+    } else {
       //Handle error
     }
   };
 
   return (
     <Grid container direction="row" spacing={3}>
-      <Grid item><Button variant={"contained"} onClick={sendMessage}>Send Message</Button></Grid>
-      <Grid item><TextField variant="standard" value={input}
-                            onChange={(event => setInput(event.target.value))} /></Grid>
+      <Grid item>
+        <Button variant={"contained"} onClick={sendMessage}>
+          Send Message
+        </Button>
+      </Grid>
+      <Grid item>
+        <TextField
+          variant="standard"
+          value={input}
+          onChange={(event) => setInput(event.target.value)}
+        />
+      </Grid>
       <Grid item>
         <Typography variant={"body1"}>
           Last Message received: {lastMessage}
@@ -103,58 +126,70 @@ export function SendingMessages() {
   );
 }
 
-export const HigherOrderComponents = withStompClient(withSubscription(
-  class HOCDemo extends React.Component {
+export const HigherOrderComponents = withStompClient(
+  withSubscription(
+    class HOCDemo extends React.Component {
+      constructor(props) {
+        super(props);
 
-    constructor(props) {
-      super(props);
+        //stompCLient property is injected in the withStompClient HOC
+        this.stompClient = props.stompClient;
+        this.state = {
+          input: "",
+          lastMessage: "No message received yet",
+        };
 
-      //stompCLient property is injected in the withStompClient HOC
-      this.stompClient = props.stompClient;
-      this.state = {
-        input: "",
-        lastMessage: "No message received yet"
-      };
+        this.handleChange = this.handleChange.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+        this.onMessage = this.onMessage.bind(this);
+      }
 
-      this.handleChange = this.handleChange.bind(this);
-      this.sendMessage = this.sendMessage.bind(this);
-      this.onMessage = this.onMessage.bind(this);
-    }
+      //You have to specify an onMessage method for the withSubscription HOC.
+      onMessage(message) {
+        this.setState({
+          lastMessage: message.body,
+        });
+      }
 
-    //You have to specify an onMessage method for the withSubscription HOC.
-    onMessage(message) {
-      this.setState({
-        lastMessage: message.body
-      });
-    }
+      sendMessage() {
+        this.stompClient.publish({
+          destination: "/app/echo",
+          body: "Echo " + this.state.input,
+        });
+      }
 
-    sendMessage() {
-      this.stompClient.publish({
-        destination: "/app/echo",
-        body: "Echo " + this.state.input
-      });
-    }
+      handleChange(event) {
+        this.setState({
+          input: event.target.value,
+        });
+      }
 
-    handleChange(event) {
-      this.setState({
-        input: event.target.value
-      });
-    }
-
-    render() {
-      return (
-        <Grid container direction="row" spacing={3}>
-          <Grid item><Button variant={"contained"} onClick={this.sendMessage}>Send Message</Button></Grid>
-          <Grid item><TextField variant="standard" value={this.state.input} onChange={this.handleChange} /></Grid>
-          <Grid item>
-            <Typography variant={"body1"}>
-              Last Message received: {this.state.lastMessage}
-            </Typography>
+      render() {
+        return (
+          <Grid container direction="row" spacing={3}>
+            <Grid item>
+              <Button variant={"contained"} onClick={this.sendMessage}>
+                Send Message
+              </Button>
+            </Grid>
+            <Grid item>
+              <TextField
+                variant="standard"
+                value={this.state.input}
+                onChange={this.handleChange}
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant={"body1"}>
+                Last Message received: {this.state.lastMessage}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-      );
-    }
-  }, "/user/queue/echoreply")
+        );
+      }
+    },
+    "/user/queue/echoreply",
+  ),
 );
 
 export function DynamicSubscription() {
@@ -164,14 +199,18 @@ export function DynamicSubscription() {
   useSubscription(
     //The value of the first parameter can be mutated to dynamically subscribe/unsubscribe from topics
     subscribed ? ["/topic/test"] : [],
-    (message) => setLastMessage(message.body)
+    (message) => setLastMessage(message.body),
   );
 
   return (
-    <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+    <Box
+      sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}
+    >
       <Box>Last Message: {lastMessage}</Box>
       <Box>
-        <Button onClick={() => setSubscribed(!subscribed)}>{subscribed ? "Unsubscribe" : "Subscribe"}</Button>
+        <Button onClick={() => setSubscribed(!subscribed)}>
+          {subscribed ? "Unsubscribe" : "Subscribe"}
+        </Button>
       </Box>
     </Box>
   );
@@ -179,7 +218,10 @@ export function DynamicSubscription() {
 
 export function Showcase(props) {
   return (
-    <Accordion style={{ margin: "3em" }} TransitionProps={{ unmountOnExit: true }}>
+    <Accordion
+      style={{ margin: "3em" }}
+      TransitionProps={{ unmountOnExit: true }}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -187,9 +229,7 @@ export function Showcase(props) {
       >
         <Typography>{props.title}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
-        {props.children}
-      </AccordionDetails>
+      <AccordionDetails>{props.children}</AccordionDetails>
     </Accordion>
   );
 }

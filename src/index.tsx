@@ -1,9 +1,9 @@
-import StompSessionProvider from './components/StompSessionProvider';
-import useSubscription from './hooks/useSubscription';
-import useStompClient from './hooks/useStompClient';
-import withStompClient from './hoc/withStompClient';
-import withSubscription from './hoc/withSubscription';
-import * as mock from './mock/index';
+import StompSessionProvider from "./components/StompSessionProvider";
+import useSubscription from "./hooks/useSubscription";
+import useStompClient from "./hooks/useStompClient";
+import withStompClient from "./hoc/withStompClient";
+import withSubscription from "./hoc/withSubscription";
+import * as mock from "./mock/index";
 
 export {
   StompSessionProvider,
@@ -11,7 +11,7 @@ export {
   useStompClient,
   withStompClient,
   withSubscription,
-  mock
+  mock,
 };
 
 export type {
@@ -32,5 +32,5 @@ export type {
   RawHeaderType,
   closeEventCallbackType,
   frameCallbackType,
-  debugFnType
-} from '@stomp/stompjs';
+  debugFnType,
+} from "@stomp/stompjs";

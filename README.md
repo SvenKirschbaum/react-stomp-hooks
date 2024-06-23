@@ -15,12 +15,9 @@ npm install --save react-stomp-hooks
 See also [the supplied example project](https://svenkirschbaum.github.io/react-stomp-hooks/), and [its sourcecode](example/src/App.jsx).
 
 ```jsx
-import React from 'react'
+import React from "react";
 
-import {
-  StompSessionProvider,
-  useSubscription,
-} from "react-stomp-hooks";
+import { StompSessionProvider, useSubscription } from "react-stomp-hooks";
 
 const App = () => {
   return (
@@ -44,9 +41,7 @@ function SubscribingComponent() {
   //You can also supply an array as the first parameter, which will subscribe to all destinations in the array
   useSubscription("/topic/test", (message) => setLastMessage(message.body));
 
-  return (
-    <div>Last Message: {lastMessage}</div>
-  );
+  return <div>Last Message: {lastMessage}</div>;
 }
 ```
 

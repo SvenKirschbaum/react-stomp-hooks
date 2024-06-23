@@ -1,14 +1,17 @@
-import { IMessage } from '@stomp/stompjs';
-import { messageCallbackType, StompHeaders } from '@stomp/stompjs';
+import { IMessage } from "@stomp/stompjs";
+import { messageCallbackType, StompHeaders } from "@stomp/stompjs";
 
-export const subscriptions = new Map<string, Map<string, messageCallbackType>>();
+export const subscriptions = new Map<
+  string,
+  Map<string, messageCallbackType>
+>();
 
 export function subscribeMock(
   destination: string,
   callback: messageCallbackType,
   // @ts-expect-error - irrelevant in mock
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  headers: StompHeaders = {}
+  headers: StompHeaders = {},
 ) {
   const subscriptionId = Math.random().toString(36).substr(2, 9);
 
@@ -32,7 +35,7 @@ export function subscribeMock(
  */
 export function mockReceiveMessage(
   destination: string,
-  message: IMessage
+  message: IMessage,
 ): void {
   if (subscriptions.has(destination)) {
     // @ts-expect-error undefined check

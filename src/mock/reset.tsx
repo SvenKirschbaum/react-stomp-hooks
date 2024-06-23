@@ -1,5 +1,5 @@
-import { subscriptions } from './subscriptions';
-import { messages } from './client';
+import { subscriptions } from "./subscriptions";
+import { messages } from "./client";
 
 /**
  * Resets the state of the mock implementation, clearing all subscriptions and messages.

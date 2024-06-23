@@ -1,7 +1,7 @@
-import React from 'react';
-import StompContext from '../context/StompContext';
-import { subscribeMock } from './subscriptions';
-import { getMockClient } from './client';
+import React from "react";
+import StompContext from "../context/StompContext";
+import { subscribeMock } from "./subscriptions";
+import { getMockClient } from "./client";
 
 /**
  * A mock StompSessionProvider.
@@ -22,7 +22,7 @@ export default function StompSessionProviderMock(props: {
       value={{
         subscribe: subscribeMock,
         // @ts-expect-error - Mock client is not a full client
-        client: props.client ?? getMockClient()
+        client: props.client ?? getMockClient(),
       }}
     >
       {props.children}

@@ -1,6 +1,6 @@
-import { useContext, useEffect, useRef } from 'react';
-import StompContext from '../context/StompContext';
-import { messageCallbackType, StompHeaders } from '@stomp/stompjs';
+import { useContext, useEffect, useRef } from "react";
+import StompContext from "../context/StompContext";
+import { messageCallbackType, StompHeaders } from "@stomp/stompjs";
 
 /**
  *
@@ -11,13 +11,13 @@ import { messageCallbackType, StompHeaders } from '@stomp/stompjs';
 function useSubscription(
   destinations: string | string[],
   onMessage: messageCallbackType,
-  headers: StompHeaders = {}
+  headers: StompHeaders = {},
 ) {
   const stompContext = useContext(StompContext);
 
   if (stompContext === undefined)
     throw new Error(
-      'There must be a StompSessionProvider as Ancestor of all Stomp Hooks and HOCs'
+      "There must be a StompSessionProvider as Ancestor of all Stomp Hooks and HOCs",
     );
 
   const callbackRef = useRef<messageCallbackType>(onMessage);
@@ -37,9 +37,9 @@ function useSubscription(
           (message) => {
             callbackRef.current(message);
           },
-          headers
-        )
-      )
+          headers,
+        ),
+      ),
     );
 
     return () => {
@@ -49,7 +49,7 @@ function useSubscription(
     };
   }, [
     Object.values(_destinations).toString(),
-    Object.values(headers).toString()
+    Object.values(headers).toString(),
   ]);
 }
 

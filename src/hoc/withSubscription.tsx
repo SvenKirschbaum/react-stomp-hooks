@@ -1,15 +1,15 @@
-import { useRef } from 'react';
-import useSubscription from '../hooks/useSubscription';
-import { StompHeaders, IMessage } from '@stomp/stompjs';
+import { useRef } from "react";
+import useSubscription from "../hooks/useSubscription";
+import { StompHeaders, IMessage } from "@stomp/stompjs";
 import {
   MessageReceiverInterface,
-  StompMessageReceiver
-} from '../interfaces/StompMessageReceiver';
+  StompMessageReceiver,
+} from "../interfaces/StompMessageReceiver";
 
 function withSubscription<P>(
   WrappedComponent: StompMessageReceiver<P>,
   destinations: string | string[],
-  headers: StompHeaders = {}
+  headers: StompHeaders = {},
 ) {
   const comp = (props: P) => {
     const ref = useRef<MessageReceiverInterface>();
@@ -18,7 +18,7 @@ function withSubscription<P>(
       (message: IMessage) => {
         if (ref.current) ref.current.onMessage(message);
       },
-      headers
+      headers,
     );
 
     // @ts-expect-error - Ref type incompatible

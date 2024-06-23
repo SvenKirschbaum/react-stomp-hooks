@@ -2,7 +2,7 @@ name: release
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 22.x
-          registry-url: 'https://registry.npmjs.org/'
+          registry-url: "https://registry.npmjs.org/"
       - run: npm ci
       - run: (cd example && npm install)
       - run: npm run build
@@ -32,7 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './example/build'
+          path: "./example/build"
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
       - uses: ncipollo/release-action@v1

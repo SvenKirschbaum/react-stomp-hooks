@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
-import StompContext from '../context/StompContext';
-import SockJS from 'sockjs-client';
+import { useEffect, useRef, useState } from "react";
+import StompContext from "../context/StompContext";
+import SockJS from "sockjs-client";
 import {
   Client,
   IStompSocket,
   messageCallbackType,
-  StompHeaders
-} from '@stomp/stompjs';
-import { StompSessionProviderProps } from '../interfaces/StompSessionProviderProps';
-import { StompSessionSubscription } from '../interfaces/StompSessionSubscription';
+  StompHeaders,
+} from "@stomp/stompjs";
+import { StompSessionProviderProps } from "../interfaces/StompSessionProviderProps";
+import { StompSessionSubscription } from "../interfaces/StompSessionSubscription";
 
 /**
  * The StompSessionProvider manages the STOMP connection
@@ -35,14 +35,14 @@ function StompSessionProvider(props: StompSessionProviderProps) {
     if (!stompOptions.brokerURL && !stompOptions.webSocketFactory) {
       _client.webSocketFactory = function () {
         const parsedUrl = new URL(url, window?.location?.href);
-        if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+        if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
           return new SockJS(url) as IStompSocket;
         } else if (
-          parsedUrl.protocol === 'ws:' ||
-          parsedUrl.protocol === 'wss:'
+          parsedUrl.protocol === "ws:" ||
+          parsedUrl.protocol === "wss:"
         ) {
           return new WebSocket(url) as IStompSocket;
-        } else throw new Error('Protocol not supported');
+        } else throw new Error("Protocol not supported");
       };
     }
 
@@ -53,7 +53,7 @@ function StompSessionProvider(props: StompSessionProviderProps) {
         value.subscription = _client.subscribe(
           value.destination,
           value.callback,
-          value.headers
+          value.headers,
         );
       });
 
@@ -82,13 +82,13 @@ function StompSessionProvider(props: StompSessionProviderProps) {
   const subscribe = (
     destination: string,
     callback: messageCallbackType,
-    headers: StompHeaders = {}
+    headers: StompHeaders = {},
   ) => {
     const subscriptionId = Math.random().toString(36).substr(2, 9);
     const subscriptionRequest: StompSessionSubscription = {
       destination,
       callback,
-      headers
+      headers,
     };
 
     subscriptionRequests.current.set(subscriptionId, subscriptionRequest);
@@ -97,7 +97,7 @@ function StompSessionProvider(props: StompSessionProviderProps) {
       subscriptionRequest.subscription = client.subscribe(
         destination,
         callback,
-        headers
+        headers,
       );
     }
 
@@ -116,7 +116,7 @@ function StompSessionProvider(props: StompSessionProviderProps) {
     <StompContext.Provider
       value={{
         client,
-        subscribe
+        subscribe,
       }}
     >
       {children}

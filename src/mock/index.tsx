@@ -1,11 +1,11 @@
-import StompSessionProviderMock from './StompSessionProviderMock';
+import StompSessionProviderMock from "./StompSessionProviderMock";
 import {
   getMockClient,
   mockClientPublish,
-  getSentMockMessages
-} from './client';
-import { mockReceiveMessage, getMockSubscriptions } from './subscriptions';
-import { reset } from './reset';
+  getSentMockMessages,
+} from "./client";
+import { mockReceiveMessage, getMockSubscriptions } from "./subscriptions";
+import { reset } from "./reset";
 
 export {
   StompSessionProviderMock,
@@ -14,5 +14,5 @@ export {
   mockReceiveMessage,
   getSentMockMessages,
   reset,
-  getMockSubscriptions
+  getMockSubscriptions,
 };
