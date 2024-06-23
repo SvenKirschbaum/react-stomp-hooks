@@ -37,7 +37,7 @@ export function App() {
     >
       <CssBaseline />
       <Container>
-        <Card style={{ margin: "3em" }} variant="outlined">
+        <Card style={{ margin: "3em" }}>
           <CardContent>
             <Typography>
               You can see the STOMP Messages send and received in the browser
