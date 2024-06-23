@@ -12,7 +12,7 @@ export function mockClientPublish(params: IPublishParams) {
     messages.set(params.destination, []);
   }
 
-  // @ts-ignore
+  // @ts-expect-error - possible undefined
   messages.get(params.destination).push(params);
 }
 

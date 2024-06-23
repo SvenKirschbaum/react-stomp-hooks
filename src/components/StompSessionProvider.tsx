@@ -20,7 +20,8 @@ import { StompSessionSubscription } from '../interfaces/StompSessionSubscription
  * Please consult the @stomp/stompjs documentation for more information.
  */
 function StompSessionProvider(props: StompSessionProviderProps) {
-  let { url, children, stompClientOptions, ...stompOptions } = props;
+  const { url, children, stompClientOptions, ...otherProps } = props;
+  let stompOptions = otherProps;
 
   // Support old API
   if (stompClientOptions) stompOptions = stompClientOptions;

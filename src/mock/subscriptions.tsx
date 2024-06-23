@@ -1,26 +1,26 @@
 import { IMessage } from '@stomp/stompjs';
 import { messageCallbackType, StompHeaders } from '@stomp/stompjs';
 
-export const subscriptions = new Map<string, Map<string, Function>>();
+export const subscriptions = new Map<string, Map<string, messageCallbackType>>();
 
 export function subscribeMock(
   destination: string,
   callback: messageCallbackType,
-  // @ts-ignore
+  // @ts-expect-error - irrelevant in mock
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   headers: StompHeaders = {}
 ) {
   const subscriptionId = Math.random().toString(36).substr(2, 9);
 
   if (!subscriptions.has(destination)) {
-    subscriptions.set(destination, new Map<string, Function>());
+    subscriptions.set(destination, new Map<string, messageCallbackType>());
   }
 
-  // @ts-ignore
+  // @ts-expect-error undefined check
   subscriptions.get(destination).set(subscriptionId, callback);
 
   return () => {
-    // @ts-ignore
+    // @ts-expect-error undefined check
     subscriptions.get(destination).delete(subscriptionId);
   };
 }
@@ -35,8 +35,8 @@ export function mockReceiveMessage(
   message: IMessage
 ): void {
   if (subscriptions.has(destination)) {
-    // @ts-ignore
-    subscriptions.get(destination).forEach((callback: Function) => {
+    // @ts-expect-error undefined check
+    subscriptions.get(destination).forEach((callback: messageCallbackType) => {
       callback(message);
     });
   }

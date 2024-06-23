@@ -11,7 +11,7 @@ function withSubscription<P>(
   destinations: string | string[],
   headers: StompHeaders = {}
 ) {
-  return (props: P) => {
+  const comp = (props: P) => {
     const ref = useRef<MessageReceiverInterface>();
     useSubscription(
       destinations,
@@ -21,9 +21,13 @@ function withSubscription<P>(
       headers
     );
 
-    // @ts-ignore
+    // @ts-expect-error - Ref type incompatible
     return <WrappedComponent ref={ref} {...props} />;
   };
+
+  comp.displayName = `withSubscription(${WrappedComponent.displayName || WrappedComponent.name})`;
+
+  return comp;
 }
 
 export default withSubscription;

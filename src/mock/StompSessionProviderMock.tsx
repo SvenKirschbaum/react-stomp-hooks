@@ -15,13 +15,13 @@ import { getMockClient } from './client';
  */
 export default function StompSessionProviderMock(props: {
   children: React.ReactNode;
-  client?: any;
+  client?: unknown;
 }) {
   return (
     <StompContext.Provider
       value={{
         subscribe: subscribeMock,
-        // @ts-ignore
+        // @ts-expect-error - Mock client is not a full client
         client: props.client ?? getMockClient()
       }}
     >

@@ -9,6 +9,7 @@ afterEach(() => {
 
 
 //Test Subscribing Component using provided Mock implementation
+// eslint-disable-next-line vitest/expect-expect
 it('Subscribing component works', () => {
   //Render Subscribing Component, with StompSessionProviderMock
   render(

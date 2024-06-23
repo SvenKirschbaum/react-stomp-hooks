@@ -12,6 +12,7 @@ vi.mock('react-stomp-hooks', async () => {
   };
 })
 
+// eslint-disable-next-line vitest/expect-expect
 it('app renders without crashing', () => {
   render(<App />);
 })

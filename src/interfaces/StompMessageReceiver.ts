@@ -5,6 +5,6 @@ export interface MessageReceiverInterface {
   onMessage: messageCallbackType;
 }
 
-export type StompMessageReceiver<P = {}> = React.ComponentClass<P> & {
-  new (props: P, context?: any): React.Component<P> & MessageReceiverInterface;
+export type StompMessageReceiver<P = object> = React.ComponentClass<P> & {
+  new (props: P, context?: unknown): React.Component<P> & MessageReceiverInterface;
 };
