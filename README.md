@@ -28,6 +28,7 @@ const App = () => {
       //All options supported by @stomp/stompjs can be used here
     >
       <SubscribingComponent />
+      <SendingMessages />
     </StompSessionProvider>
   );
 };
@@ -42,6 +43,27 @@ function SubscribingComponent() {
   useSubscription("/topic/test", (message) => setLastMessage(message.body));
 
   return <div>Last Message: {lastMessage}</div>;
+}
+
+export function SendingMessages() {
+  //Get Instance of StompClient
+  //This is the StompCLient from @stomp/stompjs
+  //Note: This will be undefined if the client is currently not connected
+  const stompClient = useStompClient();
+
+  const sendMessage = () => {
+    if (stompClient) {
+      //Send Message
+      stompClient.publish({
+        destination: "/app/echo",
+        body: "Echo 123",
+      });
+    } else {
+      //Handle error
+    }
+  };
+
+  return <Button onClick={sendMessage}>Send Message</Button>;
 }
 ```
 
