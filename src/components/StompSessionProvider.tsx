@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import StompContext from "../context/StompContext";
-import SockJS from "sockjs-client";
+import SockJS from "sockjs-client/dist/sockjs.min.js";
 import {
   Client,
   IStompSocket,
