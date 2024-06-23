@@ -20,7 +20,7 @@ import { StompSessionSubscription } from "../interfaces/StompSessionSubscription
  * Please consult the @stomp/stompjs documentation for more information.
  */
 function StompSessionProvider(props: StompSessionProviderProps) {
-  const { url, children, ...stompOptions } = props;
+  const { url, children, enabled, ...stompOptions } = props;
 
   const [client, setClient] = useState<Client | undefined>(undefined);
   const subscriptionRequests = useRef(new Map());
@@ -68,12 +68,14 @@ function StompSessionProvider(props: StompSessionProviderProps) {
       };
     }
 
-    _client.activate();
+    if (enabled !== false) {
+      _client.activate();
+    }
 
     return () => {
       _client.deactivate();
     };
-  }, [url, ...Object.values(stompOptions)]);
+  }, [url, enabled, ...Object.values(stompOptions)]);
 
   const subscribe = (
     destination: string,

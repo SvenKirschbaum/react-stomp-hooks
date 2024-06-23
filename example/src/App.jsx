@@ -17,7 +17,9 @@ import {
   Button,
   Card,
   CardContent,
+  Checkbox,
   Container,
+  FormControlLabel,
   Grid,
   TextField,
   Typography,
@@ -25,6 +27,8 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export function App() {
+  const [enabled, setEnabled] = useState(true);
+
   return (
     //Initialize Stomp connection, will use sockjs, as the protocol specified is https
     //The Connection can be used by all child components via the hooks or hocs.
@@ -34,8 +38,20 @@ export function App() {
       debug={(str) => {
         console.log(str);
       }}
+      //The enabled prop can be used to enable/disable the connection. Defaults to true
+      enabled={enabled}
     >
       <CssBaseline />
+      <FormControlLabel
+        className="enable-checkbox"
+        control={
+          <Checkbox
+            checked={enabled}
+            onChange={(event) => setEnabled(event.target.checked)}
+          />
+        }
+        label="Enabled"
+      />
       <Container>
         <Card style={{ margin: "3em" }}>
           <CardContent>
