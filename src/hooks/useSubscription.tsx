@@ -1,19 +1,21 @@
 import { useContext, useEffect, useRef } from "react";
-import StompContext from "../context/StompContext";
 import { messageCallbackType, StompHeaders } from "@stomp/stompjs";
+import getStompContext from "../context/StompContext.tsx";
 
 /**
  *
  * @param destinations The destinations to subscribe to. Can be a string for a single destination or an array of strings for multiple.
  * @param onMessage Callback called when a message arrives for this subscription
  * @param headers Additional Headers for this subscription, consult @stomp/stompjs docs.
+ * @param name Name of the StompSessionProvider to use. Default is "default"
  */
 function useSubscription(
   destinations: string | string[],
   onMessage: messageCallbackType,
   headers: StompHeaders = {},
+  name?: string,
 ) {
-  const stompContext = useContext(StompContext);
+  const stompContext = useContext(getStompContext(name || "default"));
 
   if (stompContext === undefined)
     throw new Error(

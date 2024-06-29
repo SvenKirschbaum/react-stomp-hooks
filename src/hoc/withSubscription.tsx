@@ -10,6 +10,7 @@ function withSubscription<P>(
   WrappedComponent: StompMessageReceiver<P>,
   destinations: string | string[],
   headers: StompHeaders = {},
+  name?: string,
 ) {
   const comp = (props: P) => {
     const ref = useRef<MessageReceiverInterface>();
@@ -19,6 +20,7 @@ function withSubscription<P>(
         if (ref.current) ref.current.onMessage(message);
       },
       headers,
+      name,
     );
 
     // @ts-expect-error - Ref type incompatible

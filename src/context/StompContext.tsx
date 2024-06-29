@@ -1,8 +1,25 @@
-import { createContext } from "react";
+import { createContext, Context } from "react";
 import { StompSessionProviderContext } from "../interfaces/StompSessionProviderContext";
 
-const StompContext = createContext<StompSessionProviderContext | undefined>(
-  undefined,
-);
+const StompContextMap = new Map<
+  string,
+  Context<StompSessionProviderContext | undefined>
+>();
 
-export default StompContext;
+const getStompContext = (id: string) => {
+  if (StompContextMap.has(id)) {
+    return StompContextMap.get(id) as Context<
+      StompSessionProviderContext | undefined
+    >;
+  }
+
+  const context = createContext<StompSessionProviderContext | undefined>(
+    undefined,
+  );
+
+  StompContextMap.set(id, context);
+
+  return context;
+};
+
+export default getStompContext;

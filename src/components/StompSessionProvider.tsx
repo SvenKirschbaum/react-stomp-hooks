@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import StompContext from "../context/StompContext";
 import SockJS from "sockjs-client/dist/sockjs.min.js";
 import {
   Client,
@@ -9,6 +8,7 @@ import {
 } from "@stomp/stompjs";
 import { StompSessionProviderProps } from "../interfaces/StompSessionProviderProps";
 import { StompSessionSubscription } from "../interfaces/StompSessionSubscription";
+import getStompContext from "../context/StompContext.tsx";
 
 /**
  * The StompSessionProvider manages the STOMP connection
@@ -20,8 +20,9 @@ import { StompSessionSubscription } from "../interfaces/StompSessionSubscription
  * Please consult the @stomp/stompjs documentation for more information.
  */
 function StompSessionProvider(props: StompSessionProviderProps) {
-  const { url, children, enabled, ...stompOptions } = props;
+  const { url, children, enabled, name, ...stompOptions } = props;
 
+  const StompContext = getStompContext(name || "default");
   const [client, setClient] = useState<Client | undefined>(undefined);
   const subscriptionRequests = useRef(new Map());
 

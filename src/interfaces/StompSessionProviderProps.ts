@@ -5,4 +5,5 @@ export interface StompSessionProviderProps extends StompConfig {
   url: string;
   children: ReactNode;
   enabled?: boolean;
+  name?: string;
 }

@@ -1,14 +1,14 @@
 import { useContext } from "react";
-import StompContext from "../context/StompContext";
 import { StompSessionProviderContext } from "../interfaces/StompSessionProviderContext";
+import getStompContext from "../context/StompContext";
 
 /**
  * Returns the Stomp Client from @stomp/stompjs
  * This will be undefined if the client is currently not connected
  */
-function useStompClient() {
+function useStompClient(name?: string) {
   const context = useContext<StompSessionProviderContext | undefined>(
-    StompContext,
+    getStompContext(name || "default"),
   );
 
   if (context === undefined)

@@ -148,8 +148,6 @@ export const HigherOrderComponents = withStompClient(
       constructor(props) {
         super(props);
 
-        //stompCLient property is injected in the withStompClient HOC
-        this.stompClient = props.stompClient;
         this.state = {
           input: "",
           lastMessage: "No message received yet",
@@ -168,10 +166,13 @@ export const HigherOrderComponents = withStompClient(
       }
 
       sendMessage() {
-        this.stompClient.publish({
-          destination: "/app/echo",
-          body: "Echo " + this.state.input,
-        });
+        //stompClient prop is injected in the withStompClient HOC
+        if (this.props.stompClient) {
+          this.props.stompClient.publish({
+            destination: "/app/echo",
+            body: "Echo " + this.state.input,
+          });
+        }
       }
 
       handleChange(event) {
