@@ -62,7 +62,8 @@ export function App() {
             <Typography>
               Note that, because the components are unmounted when the accordion
               is unexpanded, all subscriptions are removed when you close the
-              accordion.
+              accordion. You can furthermore globally enable/disable the
+              connection using the checkbox in the bottom right.
             </Typography>
           </CardContent>
         </Card>
@@ -77,6 +78,9 @@ export function App() {
         </Showcase>
         <Showcase title={"Dynamic subscribing/unsubscribing"}>
           <DynamicSubscription />
+        </Showcase>
+        <Showcase title={"Multiple Providers"}>
+          <MultipleProviders />
         </Showcase>
       </Container>
     </StompSessionProvider>
@@ -230,6 +234,84 @@ export function DynamicSubscription() {
         </Button>
       </Box>
     </Box>
+  );
+}
+
+export function MultipleProviders() {
+  //To allow for multiple STOMP connections, you can nest StompSessionProviders and specify a name for each
+  //Each child component can then specify which provider to use, by passing the name prop to the hooks or HOCs
+  return (
+    <StompSessionProvider
+      url={"https://stream.elite12.de/api/sock"}
+      name={"nested-1"}
+    >
+      <StompSessionProvider
+        url={"https://stream.elite12.de/api/sock"}
+        name={"nested-2"}
+      >
+        <StompSessionProvider
+          url={"https://stream.elite12.de/api/sock"}
+          name={"nested-3"}
+        >
+          {/* An empty name, or a name of "default" will use the default provider */}
+          <MultipleProviderChild />
+          <MultipleProviderChild name={"nested-1"} />
+          <MultipleProviderChild name={"nested-2"} />
+          <MultipleProviderChild name={"nested-3"} />
+        </StompSessionProvider>
+      </StompSessionProvider>
+    </StompSessionProvider>
+  );
+}
+
+function MultipleProviderChild(props) {
+  //All hooks and HOCs can optionally be passed a name argument to specify which provider to use
+  const stompClient = useStompClient(props.name);
+  useSubscription(
+    "/user/queue/echoreply", //The destination to subscribe to
+    (message) => setLastMessage(message.body), //The handler for the message
+    undefined, //No custom headers
+    props.name, //Specify the provider to use
+  );
+
+  const [input, setInput] = useState("");
+  const [lastMessage, setLastMessage] = useState("No message received yet");
+
+  const sendMessage = () => {
+    if (stompClient) {
+      //Send Message
+      stompClient.publish({
+        destination: "/app/echo",
+        body: "Echo " + input,
+      });
+    }
+  };
+
+  return (
+    <>
+      <Typography variant="h6" mb={2}>
+        Provider Name: {props.name || "default"}
+      </Typography>
+      <Grid container direction="row" spacing={3} mb={5}>
+        <Grid item>
+          <Button variant={"contained"} onClick={sendMessage}>
+            Send Message
+          </Button>
+        </Grid>
+        <Grid item>
+          <TextField
+            variant="standard"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+        </Grid>
+        <Grid item>
+          <Typography variant={"body1"}>
+            Last Message received: {lastMessage}
+          </Typography>
+        </Grid>
+      </Grid>
+    </>
   );
 }
 
