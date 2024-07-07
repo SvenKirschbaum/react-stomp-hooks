@@ -1,9 +1,6 @@
 {
   "name": "react-stomp-hooks",
-  "version": "3.0.0-alpha.5",
-  "publishConfig": {
-    "tag": "next"
-  },
+  "version": "3.0.0",
   "type": "module",
   "description": "A react library to interact with a stomp connection via hooks",
   "author": "Sven Kirschbaum",

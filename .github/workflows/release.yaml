@@ -38,4 +38,3 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "README.md"
-          prerelease: true
