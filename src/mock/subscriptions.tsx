@@ -23,8 +23,8 @@ export function subscribeMock(
   subscriptions.get(destination).set(subscriptionId, callback);
 
   return () => {
-    // @ts-expect-error undefined check
-    subscriptions.get(destination).delete(subscriptionId);
+    // Might be undefined if reset was called before the component unmounted
+    subscriptions.get(destination)?.delete(subscriptionId);
   };
 }
 
