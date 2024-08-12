@@ -16,7 +16,7 @@
     "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.14",
     "@mui/icons-material": "^5.16.5",
-    "@mui/material": "^5.16.5",
+    "@mui/material": "^5.16.7",
     "react-stomp-hooks": "file:.."
   },
   "devDependencies": {
