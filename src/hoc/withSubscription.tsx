@@ -13,7 +13,7 @@ function withSubscription<P>(
   name?: string,
 ) {
   const comp = (props: P) => {
-    const ref = useRef<MessageReceiverInterface>();
+    const ref = useRef<MessageReceiverInterface>(null);
     useSubscription(
       destinations,
       (message: IMessage) => {
